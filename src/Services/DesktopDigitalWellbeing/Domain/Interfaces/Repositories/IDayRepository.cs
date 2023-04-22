@@ -10,8 +10,8 @@ namespace Domain.Interfaces.Repositories
 {
     public interface IDayRepository
     {
-        Task<RequestResponse> AddDay(Day day);
-        Task<RequestResponse> GetDays();
-        Task<RequestResponse> GetDay(DateTime dayDate);
+        Task<RequestResponse> AddDay(DateTime dayDate);
+        Task<RequestResponse<IEnumerable<Day>>> GetDays();
+        Task<RequestResponse<Day>> GetDay(DateTime dayDate);
     }
 }

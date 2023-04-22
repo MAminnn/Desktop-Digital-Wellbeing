@@ -1,4 +1,6 @@
-﻿using Application.Requests.Queries;
+﻿using Application.DTOs;
+using Application.Mappers;
+using Application.Requests.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,31 +9,29 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.Queries
 {
-    public class GetApplicationStatsOfAppHandler : IRequestHandler<GetApplicationStatsOfAppQuery>
+    public class GetApplicationStatsOfAppHandler : IRequestHandler<GetApplicationStatsOfAppQuery, IEnumerable<ApplicationStatDTO>>
     {
-        public async Task<RequestResponse> Handle(GetApplicationStatsOfAppQuery request)
+        public async Task<RequestResponse<IEnumerable<ApplicationStatDTO>>> Handle(GetApplicationStatsOfAppQuery request)
         {
             try
             {
-                var appStats = (await UnitOfWork.GetInstance()
+                var res = await UnitOfWork.GetInstance()
                 .ApplicationStatRepository
-                .GetApplicationStatsOfApp(request.applicationId
-                )).ResponseData;
-                return new RequestResponse()
+                .GetApplicationStatsOfApp(request.ApplicationId
+                );
+
+                if (res.Status == Domain.Enums.RequestStatus.Failure)
                 {
-                    ResponseData = appStats,
-                    Status = Enums.RequestStatus.Success
-                };
+                    return new RequestResponse<IEnumerable<ApplicationStatDTO>>(Enums.RequestStatus.Failure, new List<ApplicationStatDTO>(), res.ErrorDescription);
+                }
+                var appStats = MapManager.GetInstance().GetMapper().Map<IEnumerable<ApplicationStatDTO>>(res.ResponseData);
+                return new RequestResponse<IEnumerable<ApplicationStatDTO>>(Enums.RequestStatus.Success, appStats);
 
             }
             catch (Exception e)
             {
 
-                return new RequestResponse()
-                {
-                    Status = Enums.RequestStatus.Failure,
-                    ErrorDescription = e.Message
-                };
+                return new RequestResponse<IEnumerable<ApplicationStatDTO>>(Enums.RequestStatus.Failure, new List<ApplicationStatDTO>(), e.Message);
             }
         }
     }

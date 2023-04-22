@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Requests.Commands
+namespace WorkerService.POCOs
 {
-    public record ApplicationInsertCommand(string Path) : ICommand;
+    public record Day(DateTime dayDate);
 }

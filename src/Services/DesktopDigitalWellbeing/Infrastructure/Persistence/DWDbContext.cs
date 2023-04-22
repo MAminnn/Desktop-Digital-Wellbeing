@@ -28,7 +28,8 @@ namespace Infrastructure.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(configuration.GetConnectionString("SqliteDB"));
+            //optionsBuilder.UseSqlite(configuration.GetConnectionString("SqliteDB"));
+            optionsBuilder.UseSqlite(@"DataSource = Z:\Projects\Productions\Desktop Digital Wellbeing\src\Services\DesktopDigitalWellbeing\Infrastructure\Database\DWDatabase.db");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

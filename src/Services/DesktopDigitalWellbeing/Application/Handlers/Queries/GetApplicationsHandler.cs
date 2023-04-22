@@ -1,4 +1,6 @@
-﻿using Application.Requests.Queries;
+﻿using Application.DTOs;
+using Application.Mappers;
+using Application.Requests.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,31 +9,30 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.Queries
 {
-    public class GetApplicationsHandler : IRequestHandler<GetApplicationsQuery>
+    public class GetApplicationsHandler : IRequestHandler<GetApplicationsQuery, IEnumerable<ApplicationDTO>>
     {
-        public async Task<RequestResponse> Handle(GetApplicationsQuery request)
+        public async Task<RequestResponse<IEnumerable<ApplicationDTO>>> Handle(GetApplicationsQuery request)
         {
             try
             {
-                var applications = (await UnitOfWork.GetInstance()
+                var res = await UnitOfWork.GetInstance()
                 .ApplicationRepository
                 .GetApplications(
-                )).ResponseData;
-                return new RequestResponse()
+                );
+
+                if (res.Status == Domain.Enums.RequestStatus.Failure)
                 {
-                    ResponseData = applications,
-                    Status = Enums.RequestStatus.Success
-                };
+                    return new RequestResponse<IEnumerable<ApplicationDTO>>(Enums.RequestStatus.Failure, new List<ApplicationDTO>(), res.ErrorDescription);
+                }
+
+                var applications = MapManager.GetInstance().GetMapper().Map<IEnumerable<ApplicationDTO>>(res.ResponseData);
+                return new RequestResponse<IEnumerable<ApplicationDTO>>(Enums.RequestStatus.Success, applications);
 
             }
             catch (Exception e)
             {
 
-                return new RequestResponse()
-                {
-                    Status = Enums.RequestStatus.Failure,
-                    ErrorDescription = e.Message
-                };
+                return new RequestResponse<IEnumerable<ApplicationDTO>>(Enums.RequestStatus.Success, new List<ApplicationDTO>(), e.Message);
             }
         }
     }

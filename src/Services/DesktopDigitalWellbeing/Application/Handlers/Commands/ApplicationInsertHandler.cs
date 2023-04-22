@@ -1,5 +1,6 @@
 ﻿using Application.Requests.Commands;
-using Domain.POCOs.Entities;
+using Application.Enums;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +13,24 @@ namespace Application.Handlers.Commands
     {
         public async Task<RequestResponse> Handle(ApplicationInsertCommand request)
         {
-			try
-			{
-                await UnitOfWork.GetInstance()
+            try
+            {
+                var res = await UnitOfWork.GetInstance()
                 .ApplicationRepository
-                .AddApplication(new Domain.POCOs.Entities.Application() { Path = request.path });
+                .AddApplication(request.Path);
 
-                return new RequestResponse() { Status=Enums.RequestStatus.Success };
+                if (res.Status == Domain.Enums.RequestStatus.Failure)
+                {
+                    return new RequestResponse(Enums.RequestStatus.Failure, res.ErrorDescription);
+                }
+
+                return new RequestResponse(Enums.RequestStatus.Success);
 
             }
             catch (Exception e)
-			{
+            {
 
-                return new RequestResponse() { Status = Enums.RequestStatus.Failure , ErrorDescription = e.Message};
+                return new RequestResponse(Enums.RequestStatus.Failure, e.Message);
             }
 
         }

@@ -9,24 +9,23 @@ namespace Application.Handlers.Commands
 
             try
             {
-                await UnitOfWork.GetInstance()
+                var res = await UnitOfWork.GetInstance()
                 .ApplicationStatRepository
-                .UpdateTimeStat(request.applicationId, request.dayDate, request.usedTime
+                .UpdateTimeStat(request.ApplicationId, request.DayDate, request.IncreaseValue
                 );
-                return new RequestResponse()
+
+                if (res.Status == Domain.Enums.RequestStatus.Failure)
                 {
-                    Status = Enums.RequestStatus.Success
-                };
+                    return new RequestResponse(Enums.RequestStatus.Success, res.ErrorDescription);
+                }
+
+                return new RequestResponse(Enums.RequestStatus.Success);
 
             }
             catch (Exception e)
             {
 
-                return new RequestResponse()
-                {
-                    Status = Enums.RequestStatus.Failure,
-                    ErrorDescription = e.Message
-                };
+                return new RequestResponse(Enums.RequestStatus.Failure, e.Message);
             }
 
 

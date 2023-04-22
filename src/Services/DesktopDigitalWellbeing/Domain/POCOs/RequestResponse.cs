@@ -7,10 +7,6 @@ using System.Threading.Tasks;
 
 namespace Domain.POCOs
 {
-    public record RequestResponse
-    {
-        public object? ResponseData { get; set; }
-        public RequestStatus Status { get; set; }
-        public string? ErrorDescription { get; set; }
-    }
+    public record RequestResponse(RequestStatus Status, string ErrorDescription = "");
+    public record RequestResponse<TResponseDataType>(RequestStatus Status, TResponseDataType ResponseData, string ErrorDescription="");
 }

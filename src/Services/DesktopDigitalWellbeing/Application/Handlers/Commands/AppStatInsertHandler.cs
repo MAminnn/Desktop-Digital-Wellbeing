@@ -13,28 +13,28 @@ namespace Application.Handlers.Commands
     {
         public async Task<RequestResponse> Handle(AppStatInsertCommand cmd)
         {
-			try
-			{
-                await UnitOfWork.GetInstance()
+            try
+            {
+                var application = (await UnitOfWork.GetInstance().ApplicationRepository.GetApplication(cmd.ApplicationId)).ResponseData;
+                var day = (await UnitOfWork.GetInstance().DayRepository.GetDay(cmd.DayDate)).ResponseData;
+                var res = await UnitOfWork.GetInstance()
                 .ApplicationStatRepository
                 .AddApplicationState(
-                new Domain.POCOs.Entities.Application() { ID = cmd.applicationId },
-                new Day() { DateTime = cmd.dayDate }
+                application, day
                 );
-                return new RequestResponse()
+
+                if (res.Status == Domain.Enums.RequestStatus.Failure)
                 {
-                    Status = Enums.RequestStatus.Success
-                };
+                    return new RequestResponse(Enums.RequestStatus.Failure,res.ErrorDescription);
+                }
+
+                return new RequestResponse(Enums.RequestStatus.Success);
 
             }
-			catch (Exception e)
-			{
+            catch (Exception e)
+            {
 
-                return new RequestResponse()
-                {
-                    Status = Enums.RequestStatus.Failure,
-                    ErrorDescription = e.Message
-                };
+                return new RequestResponse(Enums.RequestStatus.Failure, e.Message);
             }
         }
     }

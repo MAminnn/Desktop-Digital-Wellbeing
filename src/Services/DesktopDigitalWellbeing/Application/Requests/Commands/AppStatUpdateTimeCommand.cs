@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Application.Requests.Commands
 {
-    public record AppStatUpdateTimeCommand(Guid applicationId, DateTime dayDate, TimeSpan usedTime);
+    public record AppStatUpdateTimeCommand(Guid ApplicationId, DateTime DayDate, TimeSpan IncreaseValue) : ICommand;
 }

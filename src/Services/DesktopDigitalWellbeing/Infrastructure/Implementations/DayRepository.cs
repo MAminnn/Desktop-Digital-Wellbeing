@@ -1,6 +1,7 @@
 ﻿using Domain.Interfaces.Repositories;
 using Domain.POCOs;
 using Domain.POCOs.Entities;
+using Domain.Enums;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
@@ -22,67 +23,52 @@ namespace Infrastructure.Implementations
         }
 
 
-        public async Task<RequestResponse> AddDay(Day day)
+        public async Task<RequestResponse> AddDay(DateTime dayDate)
         {
             try
             {
-                await _context.AddAsync<Day>(day);
-                return new RequestResponse()
+                await _context.AddAsync<Day>(new Day()
                 {
-                    Status = Domain.Enums.RequestStatus.Success
-                };
+                    DateTime= dayDate,
+                });
+                await _context.SaveChangesAsync();
+                return new RequestResponse(RequestStatus.Success);
             }
             catch (Exception e)
             {
-                return new RequestResponse()
-                {
-                    Status = Domain.Enums.RequestStatus.Failure,
-                    ErrorDescription = e.Message,
-                };
+                return new RequestResponse(RequestStatus.Failure, e.Message);
             }
         }
 
-        public async Task<RequestResponse> GetDay(DateTime dayDate)
+        public async Task<RequestResponse<Day>> GetDay(DateTime dayDate)
         {
             try
             {
                 var day = await _context.FindAsync<Day>(dayDate);
-                return new RequestResponse()
+                if (day is null)
                 {
-                    ResponseData = day,
-                    Status = Domain.Enums.RequestStatus.Success
-                };
+                    return new RequestResponse<Day>(RequestStatus.Failure, new Day(), "Day Not Found");
+                }
+                return new RequestResponse<Day>(RequestStatus.Success, day);
             }
             catch (Exception e)
             {
 
-                return new RequestResponse()
-                {
-                    ErrorDescription = e.Message,
-                    Status = Domain.Enums.RequestStatus.Failure
-                };
+                return new RequestResponse<Day>(RequestStatus.Failure, new Day(), e.Message);
             }
         }
 
-        public async Task<RequestResponse> GetDays()
+        public async Task<RequestResponse<IEnumerable<Day>>> GetDays()
         {
             try
             {
                 var days = await _context.Days.ToListAsync();
-                return new RequestResponse()
-                {
-                    ResponseData = days,
-                    Status = Domain.Enums.RequestStatus.Success
-                };
+                return new RequestResponse<IEnumerable<Day>>(RequestStatus.Success, days);
             }
             catch (Exception e)
             {
 
-                return new RequestResponse()
-                {
-                    ErrorDescription = e.Message,
-                    Status = Domain.Enums.RequestStatus.Failure
-                };
+                return new RequestResponse<IEnumerable<Day>>(RequestStatus.Failure, new List<Day>(), e.Message);
             }
         }
     }

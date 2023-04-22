@@ -1,4 +1,6 @@
-﻿using Application.Requests.Queries;
+﻿using Application.DTOs;
+using Application.Mappers;
+using Application.Requests.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,31 +9,30 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.Queries
 {
-    public class GetApplicationsStatsHandler : IRequestHandler<GetApplicationsStatsQuery>
+    public class GetApplicationsStatsHandler : IRequestHandler<GetApplicationsStatsQuery, IEnumerable<ApplicationStatDTO>>
     {
-        public async Task<RequestResponse> Handle(GetApplicationsStatsQuery request)
+        public async Task<RequestResponse<IEnumerable<ApplicationStatDTO>>> Handle(GetApplicationsStatsQuery request)
         {
             try
             {
-                var appStats = (await UnitOfWork.GetInstance()
+                var res = await UnitOfWork.GetInstance()
                 .ApplicationStatRepository
                 .GetApplicationsStats(
-                )).ResponseData;
-                return new RequestResponse()
+                );
+
+                if (res.Status == Domain.Enums.RequestStatus.Failure)
                 {
-                    ResponseData = appStats,
-                    Status = Enums.RequestStatus.Success
-                };
+                    return new RequestResponse<IEnumerable<ApplicationStatDTO>>(Enums.RequestStatus.Failure, new List<ApplicationStatDTO>(), res.ErrorDescription);
+                }
+
+                var applicationsStats = MapManager.GetInstance().GetMapper().Map<IEnumerable<ApplicationStatDTO>>(res.ResponseData);
+                return new RequestResponse<IEnumerable<ApplicationStatDTO>>(Enums.RequestStatus.Success, applicationsStats);
 
             }
             catch (Exception e)
             {
 
-                return new RequestResponse()
-                {
-                    Status = Enums.RequestStatus.Failure,
-                    ErrorDescription = e.Message
-                };
+                return new RequestResponse<IEnumerable<ApplicationStatDTO>>(Enums.RequestStatus.Success, new List<ApplicationStatDTO>(), e.Message);
             }
         }
     }

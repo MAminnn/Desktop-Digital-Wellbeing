@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Application.DTOs;
+using Application.Mappers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,31 +8,31 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers.Queries
 {
-    public class GetDaysHandler : IRequestHandler<GetDaysHandler>
+    public class GetDaysHandler : IRequestHandler<GetDaysHandler, IEnumerable<DayDTO>>
     {
-        public async Task<RequestResponse> Handle(GetDaysHandler request)
+
+        public async Task<RequestResponse<IEnumerable<DayDTO>>> Handle(GetDaysHandler request)
         {
             try
             {
-                var appStats = (await UnitOfWork.GetInstance()
+                var res = await UnitOfWork.GetInstance()
                 .DayRepository
                 .GetDays(
-                )).ResponseData;
-                return new RequestResponse()
+                );
+
+                if (res.Status == Domain.Enums.RequestStatus.Failure)
                 {
-                    ResponseData = appStats,
-                    Status = Enums.RequestStatus.Success
-                };
+                    return new RequestResponse<IEnumerable<DayDTO>>(Enums.RequestStatus.Failure, new List<DayDTO>(), res.ErrorDescription);
+                }
+
+                var days = MapManager.GetInstance().GetMapper().Map<IEnumerable<DayDTO>>(res.ResponseData);
+                return new RequestResponse<IEnumerable<DayDTO>>(Enums.RequestStatus.Success, days);
 
             }
             catch (Exception e)
             {
 
-                return new RequestResponse()
-                {
-                    Status = Enums.RequestStatus.Failure,
-                    ErrorDescription = e.Message
-                };
+                return new RequestResponse<IEnumerable<DayDTO>>(Enums.RequestStatus.Failure, new List<DayDTO>(), e.Message);
             }
         }
     }

@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Application.Requests.Queries
 {
-    public record GetApplicationQuery(Guid applicationId);
+    public record GetApplicationQuery(Guid ApplicationId) : IQuery;
 }

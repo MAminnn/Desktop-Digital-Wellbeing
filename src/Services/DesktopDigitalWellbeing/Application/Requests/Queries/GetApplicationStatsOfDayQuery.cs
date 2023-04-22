@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Application.Requests.Queries
 {
-    public record GetApplicationStatsOfDayQuery(DateTime dayDate);
+    public record GetApplicationStatsOfDayQuery(DateTime DayDate) : IQuery;
 }

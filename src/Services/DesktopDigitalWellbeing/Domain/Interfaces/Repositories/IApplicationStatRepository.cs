@@ -12,9 +12,9 @@ namespace Domain.Interfaces.Repositories
     {
         Task<RequestResponse> UpdateTimeStat(ApplicationStat appstat, TimeSpan usedTime);
         Task<RequestResponse> AddApplicationState(Application app, Day day);
-        Task<RequestResponse> GetApplicationStat(Guid applicationId, DateTime dayDate);
-        Task<RequestResponse> GetApplicationsStats();
-        Task<RequestResponse> GetApplicationStatsOfApp(Guid applicationId);
-        Task<RequestResponse> GetApplicationStatsOfDay(DateTime dayDate);
+        Task<RequestResponse<ApplicationStat>> GetApplicationStat(Guid applicationId, DateTime dayDate);
+        Task<RequestResponse<IEnumerable<ApplicationStat>>> GetApplicationsStats();
+        Task<RequestResponse<IEnumerable<ApplicationStat>>> GetApplicationStatsOfApp(Guid applicationId);
+        Task<RequestResponse<IEnumerable<ApplicationStat>>> GetApplicationStatsOfDay(DateTime dayDate);
     }
 }

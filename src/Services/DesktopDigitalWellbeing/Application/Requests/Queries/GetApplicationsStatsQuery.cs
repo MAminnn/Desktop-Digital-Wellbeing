@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Application.Requests.Queries
 {
-    public record GetApplicationsStatsQuery();
+    public record GetApplicationsStatsQuery() : IQuery;
 }

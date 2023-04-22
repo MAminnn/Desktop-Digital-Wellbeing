@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Application.Requests.Commands
 {
-    public record AppStatInsertCommand(Guid applicationId,DateTime dayDate);
+    public record AppStatInsertCommand(Guid ApplicationId,DateTime DayDate) : ICommand;
 }

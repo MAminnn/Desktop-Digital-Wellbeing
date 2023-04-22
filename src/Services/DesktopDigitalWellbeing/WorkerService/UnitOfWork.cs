@@ -1,18 +1,16 @@
-﻿using Application.Mappers;
-using AutoMapper;
-using Infrastructure.Implementations;
-using Microsoft.Extensions.Configuration;
+﻿using Application.Requests;
+using Application.Handlers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.Implementations;
 
-namespace Application
+namespace WorkerService
 {
     public class UnitOfWork
     {
-
         private static UnitOfWork _instance;
 
         private readonly ApplicationRepository _applicationRepository;
@@ -24,6 +22,7 @@ namespace Application
             _applicationRepository = new ApplicationRepository();
             _applicationStatRepository = new ApplicationStatRepository();
             _dayRepository = new DayRepository();
+
         }
 
         public static UnitOfWork GetInstance()

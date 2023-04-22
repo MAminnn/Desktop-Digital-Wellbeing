@@ -1,5 +1,4 @@
 ﻿using Application.Requests.Commands;
-using Domain.POCOs.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +13,22 @@ namespace Application.Handlers.Commands
         {
             try
             {
-                await UnitOfWork.GetInstance()
+                var res = await UnitOfWork.GetInstance()
                 .DayRepository
-                .AddDay(new Day() { DateTime = request.dayDate });
+                .AddDay(request.DayDate);
 
-                return new RequestResponse() { Status = Enums.RequestStatus.Success };
+                if (res.Status == Domain.Enums.RequestStatus.Failure)
+                {
+                    return new RequestResponse(Enums.RequestStatus.Failure, res.ErrorDescription);
+                }
+
+                return new RequestResponse(Enums.RequestStatus.Success);
 
             }
             catch (Exception e)
             {
 
-                return new RequestResponse() { Status = Enums.RequestStatus.Failure, ErrorDescription = e.Message };
+                return new RequestResponse(Application.Enums.RequestStatus.Failure, e.Message);
             }
         }
     }
