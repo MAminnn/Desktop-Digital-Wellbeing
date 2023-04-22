@@ -23,7 +23,7 @@ namespace WorkerService
 
         private async void CheckDay()
         {
-            var getDayQuery = new GetDayQuery(DateTime.Today);
+            var getDayQuery = new GetDayQuery(DateTime.Today, true);
             var res = await Mediator.GetInstance().HandleQuery<GetDayQuery, DayDTO>(getDayQuery);
             if (res.Status == Application.Enums.RequestStatus.Failure)
             {

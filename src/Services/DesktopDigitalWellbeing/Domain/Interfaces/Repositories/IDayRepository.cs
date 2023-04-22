@@ -12,6 +12,6 @@ namespace Domain.Interfaces.Repositories
     {
         Task<RequestResponse> AddDay(DateTime dayDate);
         Task<RequestResponse<IEnumerable<Day>>> GetDays();
-        Task<RequestResponse<Day>> GetDay(DateTime dayDate);
+        Task<RequestResponse<Day>> GetDay(DateTime dayDate, bool includeAppStats);
     }
 }

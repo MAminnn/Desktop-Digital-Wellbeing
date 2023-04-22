@@ -16,7 +16,7 @@ namespace Application.Handlers.Commands
             try
             {
                 var application = (await UnitOfWork.GetInstance().ApplicationRepository.GetApplication(cmd.ApplicationId)).ResponseData;
-                var day = (await UnitOfWork.GetInstance().DayRepository.GetDay(cmd.DayDate)).ResponseData;
+                var day = (await UnitOfWork.GetInstance().DayRepository.GetDay(cmd.DayDate, false)).ResponseData;
                 var res = await UnitOfWork.GetInstance()
                 .ApplicationStatRepository
                 .AddApplicationState(
@@ -25,7 +25,7 @@ namespace Application.Handlers.Commands
 
                 if (res.Status == Domain.Enums.RequestStatus.Failure)
                 {
-                    return new RequestResponse(Enums.RequestStatus.Failure,res.ErrorDescription);
+                    return new RequestResponse(Enums.RequestStatus.Failure, res.ErrorDescription);
                 }
 
                 return new RequestResponse(Enums.RequestStatus.Success);

@@ -17,7 +17,7 @@ namespace Application.Handlers.Queries
             {
                 var res = await UnitOfWork.GetInstance()
                 .DayRepository
-                .GetDay(request.DayDate
+                .GetDay(request.DayDate, request.IncludeAppStats
                 );
 
                 if (res.Status == Domain.Enums.RequestStatus.Failure)

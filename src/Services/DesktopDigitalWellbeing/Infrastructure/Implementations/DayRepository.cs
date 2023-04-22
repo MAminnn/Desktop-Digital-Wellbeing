@@ -29,7 +29,7 @@ namespace Infrastructure.Implementations
             {
                 await _context.AddAsync<Day>(new Day()
                 {
-                    DateTime= dayDate,
+                    DateTime = dayDate,
                 });
                 await _context.SaveChangesAsync();
                 return new RequestResponse(RequestStatus.Success);
@@ -40,11 +40,13 @@ namespace Infrastructure.Implementations
             }
         }
 
-        public async Task<RequestResponse<Day>> GetDay(DateTime dayDate)
+        public async Task<RequestResponse<Day>> GetDay(DateTime dayDate, bool includeAppStats)
         {
             try
             {
                 var day = await _context.FindAsync<Day>(dayDate);
+                if (includeAppStats)
+                    await _context.Entry(day!).Collection(d => d.ApplicationsStats).LoadAsync();
                 if (day is null)
                 {
                     return new RequestResponse<Day>(RequestStatus.Failure, new Day(), "Day Not Found");
