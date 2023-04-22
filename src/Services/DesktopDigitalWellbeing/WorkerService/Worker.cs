@@ -101,27 +101,8 @@ namespace WorkerService
                     _logger.LogError(e.Message);
                 }
 
-
-                //await new AppStatUpdateTimeHandler().Handle(new AppStatUpdateTimeCommand(appId!.Value, _today!.dayDate, TimeSpan.FromSeconds(1)));
-
                 await Task.Delay(1000, stoppingToken);
             }
         }
-
-        //private void EnableApplicationsCheck()
-        //{
-        //    new Thread(new ThreadStart(() =>
-        //    {
-        //        while (true)
-        //        {
-        //            while (DateTime.Today == _today.dayDate)
-        //            {
-
-        //                Task.Delay(5000);
-        //            }
-        //            _today = new Day(DateTime.Today);
-        //        }
-        //    }));
-        //}
     }
 }
