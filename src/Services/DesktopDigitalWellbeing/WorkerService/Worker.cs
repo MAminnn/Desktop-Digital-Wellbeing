@@ -23,15 +23,15 @@ namespace WorkerService
 
         private async void CheckDay()
         {
-            var getDayQuery = new GetDayQuery(DateTime.Today, true);
-            var res = await Mediator.GetInstance().HandleQuery<GetDayQuery, DayDTO>(getDayQuery);
+            var getDayQuery = new GetDayParallelQuery(DateTime.Today, true);
+            var res = await Mediator.GetInstance().HandleQuery<GetDayParallelQuery, DayDTO>(getDayQuery);
             if (res.Status == Application.Enums.RequestStatus.Failure)
             {
                 if (res.ErrorDescription == "Day Not Found")
                 {
-                    var insertDayCMD = new DayInsertCommand(DateTime.Today);
-                    await Mediator.GetInstance().HandleCommand<DayInsertCommand>(insertDayCMD);
-                    res = await Mediator.GetInstance().HandleQuery<GetDayQuery, DayDTO>(getDayQuery);
+                    var insertDayCMD = new DayInsertParallelCommand(DateTime.Today);
+                    await Mediator.GetInstance().HandleCommand<DayInsertParallelCommand>(insertDayCMD);
+                    res = await Mediator.GetInstance().HandleQuery<GetDayParallelQuery, DayDTO>(getDayQuery);
                 }
             }
             _today = res.ResponseData;

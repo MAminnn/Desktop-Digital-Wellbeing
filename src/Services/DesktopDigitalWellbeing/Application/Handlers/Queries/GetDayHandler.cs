@@ -32,7 +32,6 @@ namespace Application.Handlers.Queries
             }
             catch (Exception e)
             {
-
                 return new RequestResponse<DayDTO>(Enums.RequestStatus.Failure, new DayDTO(), e.Message);
             }
         }

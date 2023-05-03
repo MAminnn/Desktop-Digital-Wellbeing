@@ -40,6 +40,24 @@ namespace Infrastructure.Implementations
             }
         }
 
+        public async Task<RequestResponse> AddDayParallel(DateTime dayDate)
+        {
+            try
+            {
+                var parallelContext = DbContextManager.GetParallelContext();
+                await parallelContext.AddAsync<Day>(new Day()
+                {
+                    DateTime = dayDate,
+                });
+                await parallelContext.SaveChangesAsync();
+                return new RequestResponse(RequestStatus.Success);
+            }
+            catch (Exception e)
+            {
+                return new RequestResponse(RequestStatus.Failure, e.Message);
+            }
+        }
+
         public async Task<RequestResponse<Day>> GetDay(DateTime dayDate, bool includeAppStats)
         {
             try
@@ -49,6 +67,24 @@ namespace Infrastructure.Implementations
                     return new RequestResponse<Day>(RequestStatus.Failure, new Day(), "Day Not Found");
                 if (includeAppStats)
                     await _context.Entry(day!).Collection(d => d.ApplicationsStats).LoadAsync();
+                return new RequestResponse<Day>(RequestStatus.Success, day);
+            }
+            catch (Exception e)
+            {
+                return new RequestResponse<Day>(RequestStatus.Failure, new Day(), e.Message);
+            }
+        }
+
+        public async Task<RequestResponse<Day>> GetDayParallel(DateTime dayDate, bool includeAppStats)
+        {
+            try
+            {
+                var parallelContext = DbContextManager.GetParallelContext();
+                var day = await parallelContext.FindAsync<Day>(dayDate);
+                if (day is null)
+                    return new RequestResponse<Day>(RequestStatus.Failure, new Day(), "Day Not Found");
+                if (includeAppStats)
+                    await parallelContext.Entry(day!).Collection(d => d.ApplicationsStats).LoadAsync();
                 return new RequestResponse<Day>(RequestStatus.Success, day);
             }
             catch (Exception e)

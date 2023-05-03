@@ -10,5 +10,6 @@ namespace Infrastructure.Persistence
     {
         private readonly static DWDbContext _context = new DWDbContext();
         public static DWDbContext GetContext() => _context;
+        public static DWDbContext GetParallelContext() => new DWDbContext();
     }
 }

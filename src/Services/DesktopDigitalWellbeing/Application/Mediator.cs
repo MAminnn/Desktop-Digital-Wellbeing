@@ -31,6 +31,7 @@ namespace Application
             _commandHandlers.Add(typeof(AppStatInsertCommand), new AppStatInsertHandler());
             _commandHandlers.Add(typeof(AppStatUpdateTimeCommand), new AppStatUpdateTimeHandler());
             _commandHandlers.Add(typeof(DayInsertCommand), new DayInsertHandler());
+            _commandHandlers.Add(typeof(DayInsertParallelCommand), new DayInsertParallelHandler());
             #endregion
 
             _queryHandlers = new Dictionary<Type, Object>();
@@ -44,6 +45,7 @@ namespace Application
             _queryHandlers.Add(typeof(GetApplicationStatsOfAppQuery), new GetApplicationStatsOfAppHandler());
             _queryHandlers.Add(typeof(GetApplicationStatsOfDayQuery), new GetApplicationStatsOfDayHandler());
             _queryHandlers.Add(typeof(GetDayQuery), new GetDayHandler());
+            _queryHandlers.Add(typeof(GetDayParallelQuery), new GetDayParallelHandler());
             _queryHandlers.Add(typeof(GetDaysQuery), new GetDaysHandler());
             #endregion
 
