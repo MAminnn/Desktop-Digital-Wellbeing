@@ -40,7 +40,7 @@ namespace Infrastructure.Persistence
             //modelBuilder.Entity<Day>().HasMany<ApplicationStat>(d => d.ApplicationsStats).WithOne(appst => appst.Day).HasForeignKey(appst => appst.DayDate).HasPrincipalKey(d=>d.DateTime);
 
             modelBuilder.Entity<ApplicationStat>().HasOne<Application>(appst => appst.Application).WithMany();
-            modelBuilder.Entity<ApplicationStat>().HasOne<Day>(appst => appst.Day).WithMany(d=>d.ApplicationsStats);
+            modelBuilder.Entity<ApplicationStat>().HasOne<Day>(appst => appst.Day).WithMany(d=>d.ApplicationsStats).HasForeignKey(apps=>apps.DayDate);
 
             modelBuilder.Entity<ApplicationStat>().HasKey(appst=>new
             {

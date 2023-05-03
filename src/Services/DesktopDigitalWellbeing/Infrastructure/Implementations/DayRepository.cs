@@ -45,17 +45,14 @@ namespace Infrastructure.Implementations
             try
             {
                 var day = await _context.FindAsync<Day>(dayDate);
+                if (day is null)
+                    return new RequestResponse<Day>(RequestStatus.Failure, new Day(), "Day Not Found");
                 if (includeAppStats)
                     await _context.Entry(day!).Collection(d => d.ApplicationsStats).LoadAsync();
-                if (day is null)
-                {
-                    return new RequestResponse<Day>(RequestStatus.Failure, new Day(), "Day Not Found");
-                }
                 return new RequestResponse<Day>(RequestStatus.Success, day);
             }
             catch (Exception e)
             {
-
                 return new RequestResponse<Day>(RequestStatus.Failure, new Day(), e.Message);
             }
         }

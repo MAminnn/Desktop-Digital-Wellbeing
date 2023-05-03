@@ -55,6 +55,9 @@ namespace WorkerService
                 try
                 {
                     string openAppPath = OpenWindowsGetter.GetActiveProcessFileName();
+                    _logger.LogInformation("\n");
+                    _logger.LogInformation(openAppPath);
+                    _logger.LogInformation("\n");
 
                     Guid? appId = _applications.FirstOrDefault(a => a.Path == openAppPath)?.Id;
                     if (appId is null)
