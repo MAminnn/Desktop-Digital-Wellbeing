@@ -364,3 +364,11 @@ FodyWeavers.xsd
 /src/Services/DesktopDigitalWellbeing/Infrastructure/Migrations
 /src/Client/.idea
 /src/Client/desktop_digital_wellbeing
+/src/Services/DesktopDigitalWellbeing/DesktopDigitalWellbeing.sln
+/src/Services/DesktopDigitalWellbeing/Infrastructure/Database/DWDatabase.db-wal
+/src/Services/DesktopDigitalWellbeing/Infrastructure/Database/DWDatabase.db-shm
+/src/Services/DesktopDigitalWellbeing/Infrastructure/Database/DWDatabase.db
+/src/Services/DesktopDigitalWellbeing/Infrastructure/Migrations/
+/src/Services/DesktopDigitalWellbeing/Infrastructure/Migrations
+/src/Services/DesktopDigitalWellbeing/Infrastructure/Database/DWDatabase.db-shm
+/src/Services/DesktopDigitalWellbeing/Infrastructure/Database/DWDatabase.db-wal
