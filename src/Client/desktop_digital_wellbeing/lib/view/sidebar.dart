@@ -3,8 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 
+import 'main.dart';
+
 class SideBar extends StatefulWidget {
-  const SideBar({super.key});
+  SideBar({super.key, required this.selectedItemIndex});
+
+  int selectedItemIndex;
 
   @override
   createState() => _SideBar();
@@ -102,36 +106,28 @@ class _SideBar extends State<SideBar> {
 
   @override
   Widget build(BuildContext context) => SidebarX(
-        controller: SidebarXController(selectedIndex: 0, extended: true),
+        controller: SidebarXController(
+            selectedIndex: widget.selectedItemIndex, extended: true),
         theme: defaultSidebarTheme,
         extendedTheme: extendedSidebarTheme,
         footerDivider: Divider(
-            // thickness: 2,
-            // color: ThemeManager.applicationDarkTheme.colorScheme.background
-
             indent: 8,
             endIndent: 8,
             color: ThemeManager.applicationDarkTheme.colorScheme.secondary),
-        // headerBuilder: (context, extended) {
-        //   return SizedBox(
-        //     height: 100,
-        //     child: Padding(
-        //       padding: const EdgeInsets.all(16.0),
-        //       child: Image.asset('assets/images/avatar.png'),
-        //     ),
-        //   );
-        // },
         items: [
           SidebarXItem(
             icon: Icons.home,
             label: 'Home',
             onTap: () {
-              debugPrint('Home');
+              Navigator.of(context).pushNamed('/');
             },
           ),
-          const SidebarXItem(
-            icon: Icons.search,
-            label: 'Search',
+          SidebarXItem(
+            icon: Icons.apps,
+            label: 'Applications Statistics',
+            onTap: () {
+              Navigator.of(context).pushNamed('/AppUsageChart');
+            },
           ),
           const SidebarXItem(
             icon: Icons.people,

@@ -13,10 +13,7 @@ class AppStatViewModel {
   late String iconsPath;
   late String id;
 
-  static AppStatViewModel? convert(ApplicationStat appStat) {
-    if (appStat.usedTime < const Duration(minutes: 5)) {
-      return null;
-    }
+  static AppStatViewModel convert(ApplicationStat appStat) {
     var p = AppStatViewModel();
     p.minutes = appStat.usedTime.inMinutes;
     if (p.minutes < 60) {
