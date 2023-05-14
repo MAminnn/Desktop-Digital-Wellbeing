@@ -43,9 +43,12 @@ class ThemeManager {
   static final ThemeData applicationDarkTheme = ThemeData(
     colorScheme: ColorScheme(
       brightness: Brightness.dark,
-      primary: const Color.fromARGB(255, 73, 111, 93),
-      onPrimary: const Color.fromARGB(255, 245, 255, 245),
-      secondary: const Color.fromARGB(255, 111, 73, 91),
+      // primary: const Color.fromARGB(255, 73, 111, 93),
+      // primary: const Color.fromARGB(105, 60, 183, 167),
+      primary: const Color.fromARGB(255, 15, 138, 122),
+      onPrimary: const Color.fromARGB(255, 255, 255, 255),
+      secondary: const Color.fromARGB(255, 84, 83, 131),
+      // secondary: const Color.fromARGB(255, 183, 79, 50),
       onSecondary: const Color.fromARGB(255, 245, 255, 245),
       error: Colors.red.shade700,
       onError: Colors.black12,
