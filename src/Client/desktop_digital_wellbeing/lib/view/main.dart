@@ -1,14 +1,12 @@
-import 'package:desktop_digital_wellbeing/model/entities/day.dart';
+import 'package:desktop_digital_wellbeing/View/days_chart.dart';
 import 'package:desktop_digital_wellbeing/utilities/startup.dart';
 import 'package:desktop_digital_wellbeing/view/charts_contaienr.dart';
 import 'package:desktop_digital_wellbeing/view/sidebar.dart';
+import 'package:desktop_digital_wellbeing/view/theme_layout.dart';
 import 'package:desktop_digital_wellbeing/view/theme_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:desktop_digital_wellbeing/View/appstat_chart.dart';
 import 'package:window_size/window_size.dart';
-import 'package:desktop_digital_wellbeing/View/appstat_chart.dart';
 import 'appusage_chart.dart';
-import 'days_chart.dart';
 
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,30 +25,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        // '/': (context) => const MyApp(),
-        '/AppUsageChart': (context) => AppUsageChart()
-      },
-      title: 'Desktop Digital Wellbeing',
-      theme: ThemeManager.applicationDarkTheme,
-      home: Scaffold(
-          body: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            color: ThemeManager.applicationDarkTheme.colorScheme.background,
-            child: SideBar(selectedItemIndex: 0),
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 15),
-              color: ThemeManager.applicationDarkTheme.colorScheme.background,
-              child: const ChartsContainer(),
-            ),
-          ),
-        ],
-      )),
-    );
+        initialRoute: '/',
+        routes: {
+          // '/': (context) => const MyApp(),
+          '/AppUsageChart': (context) => const AppUsageChart()
+        },
+        title: 'Desktop Digital Wellbeing',
+        theme: ThemeManager.applicationCurrentTheme,
+        home: Scaffold(
+            backgroundColor:
+                ThemeManager.applicationCurrentTheme.colorScheme.background,
+            body: const ThemeLayout()));
   }
 }

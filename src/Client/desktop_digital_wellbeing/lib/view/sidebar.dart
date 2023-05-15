@@ -1,5 +1,4 @@
 import 'package:desktop_digital_wellbeing/view/theme_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sidebarx/sidebarx.dart';
 
@@ -19,7 +18,8 @@ class _SideBar extends State<SideBar> {
     margin: const EdgeInsets.all(2),
     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
     decoration: BoxDecoration(
-        color: ThemeManager.applicationDarkTheme.colorScheme.surface),
+        borderRadius: BorderRadius.circular(5),
+        color: ThemeManager.applicationCurrentTheme.colorScheme.surface),
     width: 230,
     itemPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
     selectedItemPadding:
@@ -30,32 +30,32 @@ class _SideBar extends State<SideBar> {
     selectedItemTextPadding:
         const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
     textStyle: TextStyle(
-        color: ThemeManager.applicationDarkTheme.colorScheme.secondary),
-    selectedTextStyle:
-        TextStyle(color: ThemeManager.applicationDarkTheme.colorScheme.surface),
+        color: ThemeManager.applicationCurrentTheme.colorScheme.secondary),
+    selectedTextStyle: TextStyle(
+        color: ThemeManager.applicationCurrentTheme.colorScheme.surface),
     itemDecoration: BoxDecoration(
         color: Colors.transparent, borderRadius: BorderRadius.circular(15)),
     selectedItemDecoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
       gradient: LinearGradient(
         colors: [
-          ThemeManager.applicationDarkTheme.colorScheme.primary,
-          ThemeManager.applicationDarkTheme.colorScheme.primary,
+          ThemeManager.applicationCurrentTheme.colorScheme.primary,
+          ThemeManager.applicationCurrentTheme.colorScheme.primary,
         ],
       ),
       boxShadow: [
         BoxShadow(
-          color: ThemeManager.applicationDarkTheme.colorScheme.primary,
+          color: ThemeManager.applicationCurrentTheme.colorScheme.primary,
           blurRadius: 8,
         )
       ],
     ),
     iconTheme: IconThemeData(
-      color: ThemeManager.applicationDarkTheme.colorScheme.secondary,
+      color: ThemeManager.applicationCurrentTheme.colorScheme.secondary,
       size: 20,
     ),
     selectedIconTheme: IconThemeData(
-      color: ThemeManager.applicationDarkTheme.colorScheme.surface,
+      color: ThemeManager.applicationCurrentTheme.colorScheme.surface,
       size: 20,
     ),
   );
@@ -64,7 +64,7 @@ class _SideBar extends State<SideBar> {
     padding: const EdgeInsets.symmetric(vertical: 10),
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: ThemeManager.applicationDarkTheme.colorScheme.surface),
+        color: ThemeManager.applicationCurrentTheme.colorScheme.surface),
     itemPadding: const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
     selectedItemPadding:
         const EdgeInsets.symmetric(vertical: 3, horizontal: 15),
@@ -74,32 +74,32 @@ class _SideBar extends State<SideBar> {
     selectedItemTextPadding:
         const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
     textStyle: TextStyle(
-        color: ThemeManager.applicationDarkTheme.colorScheme.secondary),
-    selectedTextStyle:
-        TextStyle(color: ThemeManager.applicationDarkTheme.colorScheme.surface),
+        color: ThemeManager.applicationCurrentTheme.colorScheme.secondary),
+    selectedTextStyle: TextStyle(
+        color: ThemeManager.applicationCurrentTheme.colorScheme.surface),
     itemDecoration: BoxDecoration(
         color: Colors.transparent, borderRadius: BorderRadius.circular(15)),
     selectedItemDecoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
       gradient: LinearGradient(
         colors: [
-          ThemeManager.applicationDarkTheme.colorScheme.primary,
-          ThemeManager.applicationDarkTheme.colorScheme.primary,
+          ThemeManager.applicationCurrentTheme.colorScheme.primary,
+          ThemeManager.applicationCurrentTheme.colorScheme.primary,
         ],
       ),
       boxShadow: [
         BoxShadow(
-          color: ThemeManager.applicationDarkTheme.colorScheme.primary,
+          color: ThemeManager.applicationCurrentTheme.colorScheme.primary,
           blurRadius: 8,
         )
       ],
     ),
     iconTheme: IconThemeData(
-      color: ThemeManager.applicationDarkTheme.colorScheme.secondary,
+      color: ThemeManager.applicationCurrentTheme.colorScheme.secondary,
       size: 20,
     ),
     selectedIconTheme: IconThemeData(
-      color: ThemeManager.applicationDarkTheme.colorScheme.surface,
+      color: ThemeManager.applicationCurrentTheme.colorScheme.surface,
       size: 20,
     ),
   );
@@ -113,7 +113,7 @@ class _SideBar extends State<SideBar> {
         footerDivider: Divider(
             indent: 8,
             endIndent: 8,
-            color: ThemeManager.applicationDarkTheme.colorScheme.secondary),
+            color: ThemeManager.applicationCurrentTheme.colorScheme.secondary),
         items: [
           SidebarXItem(
             icon: Icons.home,
@@ -128,14 +128,6 @@ class _SideBar extends State<SideBar> {
             onTap: () {
               Navigator.of(context).pushNamed('/AppUsageChart');
             },
-          ),
-          const SidebarXItem(
-            icon: Icons.people,
-            label: 'People',
-          ),
-          const SidebarXItem(
-            icon: Icons.favorite,
-            label: 'Favorites',
           ),
         ],
       );

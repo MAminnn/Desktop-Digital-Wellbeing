@@ -74,8 +74,9 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
             labelPosition: ChartDataLabelPosition.inside,
             isVisible: true,
             textStyle: TextStyle(
-                color:
-                    ThemeManager.applicationDarkTheme.colorScheme.onPrimary)),
+              fontFamily: ThemeManager.font,
+                color: ThemeManager
+                    .applicationCurrentTheme.colorScheme.onPrimary)),
         dataSource: appStats,
         innerRadius: '70%',
         explode: false,
@@ -95,7 +96,6 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
   }
 
   _updateChartAnnotation(appStatIndex) {
-    debugPrint("ddeded");
     if (appStats.isEmpty) {
       circularChartAnnotation = CircularChartAnnotation(
           horizontalAlignment: ChartAlignment.center,
@@ -113,7 +113,7 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
                   "You've not done any impressive activity on your computer",
                   style: TextStyle(
                       color: ThemeManager
-                          .applicationDarkTheme.colorScheme.onPrimary,
+                          .applicationCurrentTheme.colorScheme.onPrimary,
                       fontSize: 28),
                 ),
               )
@@ -138,7 +138,7 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
                     appStats[appStatIndex].usedTime,
                     style: TextStyle(
                         color: ThemeManager
-                            .applicationDarkTheme.colorScheme.onPrimary,
+                            .applicationCurrentTheme.colorScheme.onPrimary,
                         fontSize: 27),
                   ),
                 )
@@ -165,14 +165,14 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
     return Container(
         decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
           BoxShadow(
-              color: ThemeManager.applicationDarkTheme.colorScheme.primary
+              color: ThemeManager.applicationCurrentTheme.colorScheme.primary
                   .withAlpha(210),
               blurRadius: 70,
               spreadRadius: 0.3,
               blurStyle: BlurStyle.outer)
         ]),
         child: SfCircularChart(
-          palette: ThemeManager.greenChartPalette,
+          palette: ThemeManager.currentChartPalette,
           onSelectionChanged: (point) {
             setState(() {
               _updateChartAnnotation(point.pointIndex);
@@ -190,15 +190,15 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
                       // Color.fromARGB(110, 70, 193, 157),
                       // Color.fromARGB(40, 70, 193, 157),
 
-                      ThemeManager.applicationDarkTheme.colorScheme.primary
+                      ThemeManager.applicationCurrentTheme.colorScheme.primary
                           .withAlpha(215),
-                      ThemeManager.applicationDarkTheme.colorScheme.primary
+                      ThemeManager.applicationCurrentTheme.colorScheme.primary
                           .withAlpha(155),
-                      ThemeManager.applicationDarkTheme.colorScheme.primary
+                      ThemeManager.applicationCurrentTheme.colorScheme.primary
                           .withAlpha(95),
                     ], radius: 0.5),
-                    color:
-                        ThemeManager.applicationDarkTheme.colorScheme.primary,
+                    color: ThemeManager
+                        .applicationCurrentTheme.colorScheme.primary,
                     shape: BoxShape.circle,
                   ),
                 )),

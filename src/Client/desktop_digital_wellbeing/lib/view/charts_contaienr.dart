@@ -1,18 +1,13 @@
-import 'dart:async';
-
-import 'package:desktop_digital_wellbeing/model/entities/application_stat.dart';
-import 'package:desktop_digital_wellbeing/model/entities/day.dart';
 import 'package:desktop_digital_wellbeing/view/theme_manager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-
-import '../Controller/appstats_controller.dart';
 import 'appstat_chart.dart';
 import 'days_chart.dart';
+import 'main.dart';
 
 class ChartsContainer extends StatefulWidget {
-  const ChartsContainer({super.key});
+  ChartsContainer({super.key, required this.updateThemeCallback});
+
+  Function updateThemeCallback;
 
   @override
   createState() => _ChartsContainer();
@@ -46,26 +41,55 @@ class _ChartsContainer extends State<ChartsContainer> {
             )),
         Expanded(
             flex: 5,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        appStatsKey = UniqueKey();
-                      });
-                    },
-                    icon: Icon(
-                      Icons.refresh,
-                      color: ThemeManager
-                          .applicationDarkTheme.colorScheme.primary,
-                    )),
-                Expanded(
-                    child: ApplicationsStatsChart(
-                  dayDate: day,
-                  key: appStatsKey,
-                ))
-              ],
+            child: Padding(
+              padding: const EdgeInsets.only(top: 30),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          appStatsKey = UniqueKey();
+                        });
+                      },
+                      icon: Icon(
+                        Icons.refresh,
+                        color: ThemeManager
+                            .applicationCurrentTheme.colorScheme.primary,
+                      )),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          widget.updateThemeCallback.call(
+                              ThemeManager.applicationLightTheme,
+                              ThemeManager.lightChartPalette);
+                        });
+                      },
+                      icon: Icon(
+                        Icons.circle,
+                        color: ThemeManager
+                            .applicationLightTheme.colorScheme.primary,
+                      )),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          widget.updateThemeCallback.call(
+                              ThemeManager.applicationDarkTheme,
+                              ThemeManager.greenChartPalette);
+                        });
+                      },
+                      icon: Icon(
+                        Icons.circle,
+                        color: ThemeManager
+                            .applicationDarkTheme.colorScheme.primary,
+                      )),
+                  Expanded(
+                      child: ApplicationsStatsChart(
+                    dayDate: day,
+                    key: appStatsKey,
+                  ))
+                ],
+              ),
             )),
       ],
     );

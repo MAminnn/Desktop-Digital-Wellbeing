@@ -1,6 +1,4 @@
-import 'package:desktop_digital_wellbeing/model/entities/application.dart';
 import 'package:desktop_digital_wellbeing/model/entities/application_stat.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 

@@ -1,9 +1,7 @@
 import 'package:desktop_digital_wellbeing/model/entities/application.dart';
 import 'package:desktop_digital_wellbeing/model/entities/application_stat.dart';
 import 'package:desktop_digital_wellbeing/model/entities/day.dart';
-import 'package:desktop_digital_wellbeing/model/view_models/app_stat_vm.dart';
 import 'package:desktop_digital_wellbeing/model/view_models/appusage_lastweek_vm.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../model/database_context/database_context.dart';

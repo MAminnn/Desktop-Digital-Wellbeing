@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
-
 import 'package:desktop_digital_wellbeing/controller/days_controller.dart';
 import 'package:desktop_digital_wellbeing/model/view_models/day_vm.dart';
 import 'package:desktop_digital_wellbeing/view/theme_manager.dart';
@@ -8,8 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
-import '../model/entities/day.dart';
 
 class DaysChart extends StatefulWidget {
   DaysChart({super.key, required this.updateDayCallback});
@@ -27,16 +23,19 @@ class _DaysChartState extends State<DaysChart> {
   _updateChart(int selectedDayIndex) {
     chart = ColumnSeries<DayViewModel, dynamic>(
         initialSelectedDataIndexes: [6],
-        color: ThemeManager.applicationDarkTheme.colorScheme.secondary,
         dataLabelMapper: (data, _) => data.label,
-        dataLabelSettings: const DataLabelSettings(isVisible: true),
+        dataLabelSettings: DataLabelSettings(
+            isVisible: true,
+            textStyle: TextStyle(
+                color: ThemeManager
+                    .applicationCurrentTheme.colorScheme.onPrimary)),
         selectionBehavior: SelectionBehavior(
           enable: true,
         ),
         dataSource: days,
         pointColorMapper: (_, i) => i == selectedDayIndex
-            ? ThemeManager.applicationDarkTheme.colorScheme.primary
-            : ThemeManager.applicationDarkTheme.colorScheme.secondary,
+            ? ThemeManager.applicationCurrentTheme.colorScheme.primary
+            : ThemeManager.applicationCurrentTheme.colorScheme.secondary,
         xValueMapper: (data, _) =>
             DateFormat.MMMMEEEEd().format(data.day.dayDate),
         yValueMapper: (data, _) => data.usageSum);
@@ -61,6 +60,7 @@ class _DaysChartState extends State<DaysChart> {
   Widget build(BuildContext context) {
     debugPrint("building days chart");
     return SfCartesianChart(
+      borderColor: Colors.transparent,
       enableAxisAnimation: false,
       onSelectionChanged: (point) {
         setState(() {
@@ -68,8 +68,41 @@ class _DaysChartState extends State<DaysChart> {
           widget.updateDayCallback.call(days[point.pointIndex].day.dayDate);
         });
       },
-      primaryYAxis: NumericAxis(visibleMaximum: 24, maximum: 24, interval: 6),
-      primaryXAxis: CategoryAxis(visibleMaximum: 6, maximum: 6),
+      primaryYAxis: NumericAxis(
+          visibleMaximum: 24,
+          maximum: 24,
+          interval: 6,
+          axisLine: AxisLine(
+              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+          majorGridLines: MajorGridLines(
+              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+          minorGridLines: MinorGridLines(
+              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+          minorTickLines: MinorTickLines(
+              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+          majorTickLines: MajorTickLines(
+              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+          labelStyle: TextStyle(
+              fontFamily: ThemeManager.font,
+              color:
+                  ThemeManager.applicationCurrentTheme.colorScheme.onPrimary)),
+      primaryXAxis: CategoryAxis(
+          axisLine: AxisLine(
+              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+          majorGridLines: MajorGridLines(
+              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+          minorGridLines: MinorGridLines(
+              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+          minorTickLines: MinorTickLines(
+              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+          majorTickLines: MajorTickLines(
+              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+          visibleMaximum: 6,
+          maximum: 6,
+          labelStyle: TextStyle(
+              fontFamily: ThemeManager.font,
+              color:
+                  ThemeManager.applicationCurrentTheme.colorScheme.onPrimary)),
       series: chart != null
           ? [chart as ColumnSeries<DayViewModel, dynamic>]
           : <ColumnSeries<DayViewModel, dynamic>>[],
