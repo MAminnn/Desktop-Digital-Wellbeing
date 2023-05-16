@@ -4,6 +4,7 @@ using System.Diagnostics;
 using WorkerService.POCOs;
 using Application.DTOs;
 using Application;
+using Application.Enums;
 
 namespace WorkerService
 {
@@ -12,12 +13,12 @@ namespace WorkerService
         private readonly ILogger<Worker> _logger;
         private static List<ApplicationDTO> _applications = new List<ApplicationDTO>();
         private static DayDTO _today;
-
+        private DateTime _lastModified;
 
         public Worker(ILogger<Worker> logger)
         {
             _logger = logger;
-
+            _lastModified = DateTime.Now;
             CheckDay();
         }
 
@@ -25,7 +26,7 @@ namespace WorkerService
         {
             var getDayQuery = new GetDayParallelQuery(DateTime.Today, true);
             var res = await Mediator.GetInstance().HandleQuery<GetDayParallelQuery, DayDTO>(getDayQuery);
-            if (res.Status == Application.Enums.RequestStatus.Failure)
+            if (res.Status == RequestStatus.Failure)
             {
                 if (res.ErrorDescription == "Day Not Found")
                 {
@@ -42,7 +43,7 @@ namespace WorkerService
                 DateTime now = DateTime.Now;
                 DateTime twelveAfterNoon = new DateTime(now.Year, now.Month, now.Day + 1, 0, 0, 0);
                 int delay = (int)(twelveAfterNoon - now).TotalMilliseconds;
-                Task.Delay(delay).Wait();
+                Thread.Sleep(delay);
                 CheckDay();
 
             });
@@ -59,6 +60,10 @@ namespace WorkerService
                     _logger.LogInformation(openAppPath);
                     _logger.LogInformation("\n");
 
+                    if ((DateTime.Now - _lastModified).TotalSeconds > 3)
+                    {
+                        CheckDay();
+                    }
                     Guid? appId = _applications.FirstOrDefault(a => a.Path == openAppPath)?.Id;
                     if (appId is null)
                     {
@@ -97,7 +102,12 @@ namespace WorkerService
 
 
                     var updateAppStatCMD = new AppStatUpdateTimeCommand(appId!.Value, _today.DateTime, TimeSpan.FromSeconds(1));
-                    await Mediator.GetInstance().HandleCommand(updateAppStatCMD);
+                    var updateRes = await Mediator.GetInstance().HandleCommand(updateAppStatCMD);
+
+                    if (updateRes.Status == RequestStatus.Success)
+                    {
+                        _lastModified = DateTime.Now;
+                    }
                 }
                 catch (Exception e)
                 {
