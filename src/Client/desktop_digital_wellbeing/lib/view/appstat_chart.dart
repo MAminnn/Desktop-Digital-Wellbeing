@@ -46,11 +46,9 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
     }
 
     if (this.appStats.isEmpty) {
-      debugPrint("loaded");
       return;
     }
     explodeIndex = 0;
-    debugPrint("loaded");
   }
 
   _updateChart(explodeIndex) {
@@ -92,7 +90,6 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
         yValueMapper: (data, _) => (data.minutes));
     this.explodeIndex = explodeIndex;
     setState(() {});
-    debugPrint("update chart");
   }
 
   _updateChartAnnotation(appStatIndex) {
@@ -160,8 +157,6 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("chart is null : ${(chart == null)}");
-    debugPrint("building appStats chart");
     return Container(
         decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
           BoxShadow(

@@ -20,6 +20,9 @@ class Startup {
         Directory.fromUri(Uri.file(Platform.resolvedExecutable)).parent.path;
     String processPath = "$rootDir/IconExtractor.exe";
     String iconsRootDir = "$rootDir/icons/";
+    if (!await Directory(iconsRootDir).exists()) {
+      await Directory(iconsRootDir).create();
+    }
     var applications = await ApplicationsController().getApplications();
 
     for (var app in applications) {

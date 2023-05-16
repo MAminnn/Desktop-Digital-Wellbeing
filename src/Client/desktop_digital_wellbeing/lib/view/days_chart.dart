@@ -58,7 +58,6 @@ class _DaysChartState extends State<DaysChart> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("building days chart");
     return SfCartesianChart(
       borderColor: Colors.transparent,
       enableAxisAnimation: false,

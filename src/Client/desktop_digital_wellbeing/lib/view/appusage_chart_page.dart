@@ -26,7 +26,6 @@ class _AppUsageChartPage extends State<AppUsageChartPage> {
     appUsageStats = [];
     var apps = await ApplicationsController().getAppsIncludeStats();
     for (int i = 0; i < apps.length; i++) {
-      debugPrint(apps[i].usageSum.toString());
       if (apps[i].usageSum > 0.25) {
         apps[i]
             .dailyUsageHistory
