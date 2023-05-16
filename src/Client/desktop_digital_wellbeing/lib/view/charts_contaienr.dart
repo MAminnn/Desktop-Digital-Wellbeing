@@ -1,4 +1,4 @@
-import 'package:desktop_digital_wellbeing/view/theme_manager.dart';
+import 'package:desktop_digital_wellbeing/view/ui_manager.dart';
 import 'package:flutter/material.dart';
 import 'appstat_chart.dart';
 import 'days_chart.dart';
@@ -54,33 +54,33 @@ class _ChartsContainer extends State<ChartsContainer> {
                       },
                       icon: Icon(
                         Icons.refresh,
-                        color: ThemeManager
+                        color: UIManager
                             .applicationCurrentTheme.colorScheme.primary,
                       )),
                   IconButton(
                       onPressed: () {
                         setState(() {
                           widget.updateThemeCallback.call(
-                              ThemeManager.applicationLightTheme,
-                              ThemeManager.lightChartPalette);
+                              UIManager.applicationLightTheme,
+                              UIManager.lightChartPalette);
                         });
                       },
                       icon: Icon(
                         Icons.circle,
-                        color: ThemeManager
+                        color: UIManager
                             .applicationLightTheme.colorScheme.primary,
                       )),
                   IconButton(
                       onPressed: () {
                         setState(() {
                           widget.updateThemeCallback.call(
-                              ThemeManager.applicationDarkTheme,
-                              ThemeManager.greenChartPalette);
+                              UIManager.applicationDarkTheme,
+                              UIManager.greenChartPalette);
                         });
                       },
                       icon: Icon(
                         Icons.circle,
-                        color: ThemeManager
+                        color: UIManager
                             .applicationDarkTheme.colorScheme.primary,
                       )),
                   Expanded(

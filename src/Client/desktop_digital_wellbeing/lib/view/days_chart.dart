@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:desktop_digital_wellbeing/controller/days_controller.dart';
 import 'package:desktop_digital_wellbeing/model/view_models/day_vm.dart';
-import 'package:desktop_digital_wellbeing/view/theme_manager.dart';
+import 'package:desktop_digital_wellbeing/view/ui_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -27,15 +27,15 @@ class _DaysChartState extends State<DaysChart> {
         dataLabelSettings: DataLabelSettings(
             isVisible: true,
             textStyle: TextStyle(
-                color: ThemeManager
+                color: UIManager
                     .applicationCurrentTheme.colorScheme.onPrimary)),
         selectionBehavior: SelectionBehavior(
           enable: true,
         ),
         dataSource: days,
         pointColorMapper: (_, i) => i == selectedDayIndex
-            ? ThemeManager.applicationCurrentTheme.colorScheme.primary
-            : ThemeManager.applicationCurrentTheme.colorScheme.secondary,
+            ? UIManager.applicationCurrentTheme.colorScheme.primary
+            : UIManager.applicationCurrentTheme.colorScheme.secondary,
         xValueMapper: (data, _) =>
             DateFormat.MMMMEEEEd().format(data.day.dayDate),
         yValueMapper: (data, _) => data.usageSum);
@@ -73,36 +73,36 @@ class _DaysChartState extends State<DaysChart> {
           maximum: 24,
           interval: 6,
           axisLine: AxisLine(
-              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+              color: UIManager.applicationCurrentTheme.colorScheme.tertiary),
           majorGridLines: MajorGridLines(
-              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+              color: UIManager.applicationCurrentTheme.colorScheme.tertiary),
           minorGridLines: MinorGridLines(
-              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+              color: UIManager.applicationCurrentTheme.colorScheme.tertiary),
           minorTickLines: MinorTickLines(
-              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+              color: UIManager.applicationCurrentTheme.colorScheme.tertiary),
           majorTickLines: MajorTickLines(
-              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+              color: UIManager.applicationCurrentTheme.colorScheme.tertiary),
           labelStyle: TextStyle(
-              fontFamily: ThemeManager.font,
+              fontFamily: UIManager.font,
               color:
-                  ThemeManager.applicationCurrentTheme.colorScheme.onPrimary)),
+                  UIManager.applicationCurrentTheme.colorScheme.onPrimary)),
       primaryXAxis: CategoryAxis(
           axisLine: AxisLine(
-              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+              color: UIManager.applicationCurrentTheme.colorScheme.tertiary),
           majorGridLines: MajorGridLines(
-              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+              color: UIManager.applicationCurrentTheme.colorScheme.tertiary),
           minorGridLines: MinorGridLines(
-              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+              color: UIManager.applicationCurrentTheme.colorScheme.tertiary),
           minorTickLines: MinorTickLines(
-              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+              color: UIManager.applicationCurrentTheme.colorScheme.tertiary),
           majorTickLines: MajorTickLines(
-              color: ThemeManager.applicationCurrentTheme.colorScheme.tertiary),
+              color: UIManager.applicationCurrentTheme.colorScheme.tertiary),
           visibleMaximum: 6,
           maximum: 6,
           labelStyle: TextStyle(
-              fontFamily: ThemeManager.font,
+              fontFamily: UIManager.font,
               color:
-                  ThemeManager.applicationCurrentTheme.colorScheme.onPrimary)),
+                  UIManager.applicationCurrentTheme.colorScheme.onPrimary)),
       series: chart != null
           ? [chart as ColumnSeries<DayViewModel, dynamic>]
           : <ColumnSeries<DayViewModel, dynamic>>[],

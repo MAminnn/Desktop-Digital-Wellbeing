@@ -8,16 +8,16 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../model/view_models/appusage_lastweek_vm.dart';
 import '../utilities/util.dart';
-import 'theme_manager.dart';
+import 'ui_manager.dart';
 
-class AppUsageChart extends StatefulWidget {
-  const AppUsageChart({super.key});
+class AppUsageChartPage extends StatefulWidget {
+  const AppUsageChartPage({super.key});
 
   @override
-  createState() => _AppUsageChart();
+  createState() => _AppUsageChartPage();
 }
 
-class _AppUsageChart extends State<AppUsageChart> {
+class _AppUsageChartPage extends State<AppUsageChartPage> {
   List<AppUsageStatViewModel> appUsageStats = [];
   AppUsageStatViewModel? selectedApp;
   Widget selectedAppIcon = Center();
@@ -37,7 +37,7 @@ class _AppUsageChart extends State<AppUsageChart> {
     appUsageStats.sort((a, b) => b.usageSum.compareTo(a.usageSum));
     selectedApp = appUsageStats[0];
     selectedAppIcon = Center(
-      child: Image.file(File(selectedApp!.getIconPath()),width: 200),
+      child: Image.file(File(selectedApp!.getIconPath()), width: 200),
     );
     setState(() {});
   }
@@ -58,7 +58,7 @@ class _AppUsageChart extends State<AppUsageChart> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor:
-            ThemeManager.applicationCurrentTheme.colorScheme.background,
+            UIManager.applicationCurrentTheme.colorScheme.background,
         body: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -80,7 +80,7 @@ class _AppUsageChart extends State<AppUsageChart> {
                                   .reversed
                                   .toList() ??
                               [],
-                          color: ThemeManager
+                          color: UIManager
                               .applicationCurrentTheme.colorScheme.primary,
                           dataLabelMapper: (data, _) => data.label,
                           yValueMapper: (data, _) => data.usageSum * 60)
@@ -89,7 +89,7 @@ class _AppUsageChart extends State<AppUsageChart> {
                         enable: true,
                         borderWidth: 2,
                         opacity: 0.6,
-                        color: ThemeManager
+                        color: UIManager
                             .applicationCurrentTheme.colorScheme.secondary,
                         builder: (data, point, series, pointIndex,
                                 seriesIndex) =>
@@ -106,7 +106,7 @@ class _AppUsageChart extends State<AppUsageChart> {
                                         maxLines: 1,
                                         style: TextStyle(
                                             overflow: TextOverflow.ellipsis,
-                                            color: ThemeManager
+                                            color: UIManager
                                                 .applicationCurrentTheme
                                                 .colorScheme
                                                 .onSecondary)),
@@ -118,7 +118,7 @@ class _AppUsageChart extends State<AppUsageChart> {
                                               BorderRadius.circular(5),
                                           border: Border.all(
                                               width: 0.5,
-                                              color: ThemeManager
+                                              color: UIManager
                                                   .applicationCurrentTheme
                                                   .colorScheme
                                                   .primary,
@@ -128,7 +128,7 @@ class _AppUsageChart extends State<AppUsageChart> {
                                       "${data.label}  |  ${DateFormat.EEEE().format(data.day.dayDate)}",
                                       style: TextStyle(
                                           fontSize: 12,
-                                          color: ThemeManager
+                                          color: UIManager
                                               .applicationCurrentTheme
                                               .colorScheme
                                               .onSecondary),
@@ -137,50 +137,50 @@ class _AppUsageChart extends State<AppUsageChart> {
                                 ))),
                     primaryYAxis: NumericAxis(
                         axisLine: AxisLine(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.tertiary),
                         majorGridLines: MajorGridLines(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.tertiary),
                         minorGridLines: MinorGridLines(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.tertiary),
                         minorTickLines: MinorTickLines(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.tertiary),
                         majorTickLines: MajorTickLines(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.tertiary),
                         labelStyle: TextStyle(
-                            fontFamily: ThemeManager.font,
-                            color: ThemeManager.applicationCurrentTheme
-                                .colorScheme.onPrimary)),
+                            fontFamily: UIManager.font,
+                            color: UIManager.applicationCurrentTheme.colorScheme
+                                .onPrimary)),
                     primaryXAxis: CategoryAxis(
                         axisLine: AxisLine(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.tertiary),
                         majorGridLines: MajorGridLines(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.tertiary),
                         minorGridLines: MinorGridLines(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.tertiary),
                         minorTickLines: MinorTickLines(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.tertiary),
                         majorTickLines: MajorTickLines(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.tertiary),
                         labelStyle: TextStyle(
-                            fontFamily: ThemeManager.font,
-                            color: ThemeManager.applicationCurrentTheme
-                                .colorScheme.onPrimary)),
+                            fontFamily: UIManager.font,
+                            color: UIManager.applicationCurrentTheme.colorScheme
+                                .onPrimary)),
                   ),
                   DropdownButton2(
                     buttonStyleData: ButtonStyleData(
                         padding: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                            color: ThemeManager
+                            color: UIManager
                                 .applicationCurrentTheme.colorScheme.primary,
                             borderRadius: BorderRadius.circular(7))),
                     selectedItemBuilder: (context) {
@@ -205,8 +205,8 @@ class _AppUsageChart extends State<AppUsageChart> {
                     dropdownStyleData: DropdownStyleData(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: ThemeManager.applicationCurrentTheme
-                                .colorScheme.secondary)),
+                            color: UIManager.applicationCurrentTheme.colorScheme
+                                .secondary)),
                     underline: Container(),
                     value: selectedApp,
                     items: appUsageStats.map((e) {
@@ -221,10 +221,8 @@ class _AppUsageChart extends State<AppUsageChart> {
                               border: Border(
                                   bottom: BorderSide(
                                       width: 1,
-                                      color: ThemeManager
-                                          .applicationCurrentTheme
-                                          .colorScheme
-                                          .background))),
+                                      color: UIManager.applicationCurrentTheme
+                                          .colorScheme.background))),
                           child: Center(
                             child: Text(e.shortName),
                           ),

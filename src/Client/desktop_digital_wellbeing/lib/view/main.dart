@@ -1,17 +1,18 @@
 import 'package:desktop_digital_wellbeing/View/days_chart.dart';
 import 'package:desktop_digital_wellbeing/utilities/startup.dart';
+import 'package:desktop_digital_wellbeing/view/aboutus.dart';
 import 'package:desktop_digital_wellbeing/view/charts_contaienr.dart';
 import 'package:desktop_digital_wellbeing/view/sidebar.dart';
 import 'package:desktop_digital_wellbeing/view/theme_layout.dart';
-import 'package:desktop_digital_wellbeing/view/theme_manager.dart';
+import 'package:desktop_digital_wellbeing/view/ui_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:window_size/window_size.dart';
-import 'appusage_chart.dart';
+import 'appusage_chart_page.dart';
 
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  setWindowMinSize(const Size(1366, 768));
+  setWindowMinSize(const Size(1600, 900));
   await Startup().setup();
 }
 
@@ -27,14 +28,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         initialRoute: '/',
         routes: {
-          // '/': (context) => const MyApp(),
-          '/AppUsageChart': (context) => const AppUsageChart()
+          '/AboutUs': (context) => const AboutUsPage(),
+          '/AppUsageChart': (context) => const AppUsageChartPage()
         },
         title: 'Desktop Digital Wellbeing',
-        theme: ThemeManager.applicationCurrentTheme,
+        theme: UIManager.applicationCurrentTheme,
         home: Scaffold(
             backgroundColor:
-                ThemeManager.applicationCurrentTheme.colorScheme.background,
+                UIManager.applicationCurrentTheme.colorScheme.background,
             body: const ThemeLayout()));
   }
 }
