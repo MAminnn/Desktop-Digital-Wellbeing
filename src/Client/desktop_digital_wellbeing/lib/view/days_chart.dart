@@ -80,17 +80,11 @@ class _DaysChartState extends State<DaysChart> {
                   .isAfter(firstDay)) {
                 widget.offsetDays += 7;
               } else {
-                debugPrint(now
-                    .add(Duration(days: -(widget.offsetDays + 7)))
-                    .day
-                    .toString());
-                debugPrint(firstDay.day.toString());
                 int distance = now
                     .add(Duration(days: -(widget.offsetDays + 7)))
                     .difference(firstDay)
                     .inDays;
                 if (distance < 7) {
-                  debugPrint(distance.toString());
                   widget.offsetDays += distance + 1;
                 } else {
                   return;

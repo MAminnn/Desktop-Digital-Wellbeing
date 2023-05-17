@@ -12,7 +12,8 @@ import 'appusage_chart_page.dart';
 Future<void> init() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  setWindowMinSize(const Size(1600, 900));
+  setWindowMinSize(const Size(1280, 960));
+  setWindowTitle("Desktop Digital Wellbeing");
   await Startup().setup();
 }
 

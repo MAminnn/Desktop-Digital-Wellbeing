@@ -92,7 +92,6 @@ class DaysController {
     String query =
         "SELECT DateTime FROM Days day ORDER BY day.DateTime";
     var res = await _dbContext.rawQuery(query);
-    debugPrint(res[0].toString());
     return Day(applicationStats: [],
         dayDate: DateTime.parse(res[0]['DateTime'].toString()));
   }
