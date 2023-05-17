@@ -28,18 +28,21 @@ namespace Infrastructure.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(configuration.GetConnectionString("SqliteDB"));
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string currentDirPath = Path.GetDirectoryName(path: executable)!;
+            string connectionStringPath = configuration.GetConnectionString("SqliteDB")!.Replace("|CurrentDirectory|", currentDirPath);
+            optionsBuilder.UseSqlite(connectionStringPath);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Application>().HasKey(a => a.ID);
             modelBuilder.Entity<Application>().Property(a => a.Path).HasAnnotation("Required", true);
 
-            modelBuilder.Entity<Day>().HasKey(d=>d.DateTime);
+            modelBuilder.Entity<Day>().HasKey(d => d.DateTime);
             modelBuilder.Entity<ApplicationStat>().HasOne<Application>(appst => appst.Application).WithMany();
-            modelBuilder.Entity<ApplicationStat>().HasOne<Day>(appst => appst.Day).WithMany(d=>d.ApplicationsStats).HasForeignKey(apps=>apps.DayDate);
+            modelBuilder.Entity<ApplicationStat>().HasOne<Day>(appst => appst.Day).WithMany(d => d.ApplicationsStats).HasForeignKey(apps => apps.DayDate);
 
-            modelBuilder.Entity<ApplicationStat>().HasKey(appst=>new
+            modelBuilder.Entity<ApplicationStat>().HasKey(appst => new
             {
                 appst.ApplicationId,
                 appst.DayDate
