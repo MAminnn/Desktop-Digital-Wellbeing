@@ -56,10 +56,6 @@ namespace WorkerService
                 try
                 {
                     string openAppPath = OpenWindowsGetter.GetActiveProcessFileName();
-                    _logger.LogInformation("\n");
-                    _logger.LogInformation(openAppPath);
-                    _logger.LogInformation("\n");
-
                     if ((DateTime.Now - _lastModified).TotalSeconds > 3)
                     {
                         CheckDay();

@@ -28,8 +28,7 @@ namespace Infrastructure.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlite(configuration.GetConnectionString("SqliteDB"));
-            optionsBuilder.UseSqlite(@"DataSource = Z:\Projects\Productions\Desktop Digital Wellbeing\src\Services\DesktopDigitalWellbeing\Infrastructure\Database\DWDatabase.db");
+            optionsBuilder.UseSqlite(configuration.GetConnectionString("SqliteDB"));
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,8 +36,6 @@ namespace Infrastructure.Persistence
             modelBuilder.Entity<Application>().Property(a => a.Path).HasAnnotation("Required", true);
 
             modelBuilder.Entity<Day>().HasKey(d=>d.DateTime);
-            //modelBuilder.Entity<Day>().HasMany<ApplicationStat>(d => d.ApplicationsStats).WithOne(appst => appst.Day).HasForeignKey(appst => appst.DayDate).HasPrincipalKey(d=>d.DateTime);
-
             modelBuilder.Entity<ApplicationStat>().HasOne<Application>(appst => appst.Application).WithMany();
             modelBuilder.Entity<ApplicationStat>().HasOne<Day>(appst => appst.Day).WithMany(d=>d.ApplicationsStats).HasForeignKey(apps=>apps.DayDate);
 

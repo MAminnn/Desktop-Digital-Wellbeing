@@ -4,7 +4,7 @@ using WorkerService;
 Log.Logger = new LoggerConfiguration().MinimumLevel.Debug()
     .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
     .Enrich.FromLogContext()
-    .WriteTo.File(@"Z:\log.txt")
+    .WriteTo.File(Path.Combine(Directory.GetCurrentDirectory(), "logs.txt"))
     .CreateLogger();
 
 IHost host = Host.CreateDefaultBuilder(args)
