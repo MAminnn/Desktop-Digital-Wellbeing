@@ -1,5 +1,6 @@
 import 'package:desktop_digital_wellbeing/view/ui_manager.dart';
 import 'package:flutter/material.dart';
+import '../model/view_models/day_vm.dart';
 import 'appstat_chart.dart';
 import 'days_chart.dart';
 import 'main.dart';
@@ -16,7 +17,10 @@ class ChartsContainer extends StatefulWidget {
 class _ChartsContainer extends State<ChartsContainer> {
   DateTime day = DateTime.now();
   Function? updateDay;
+  Function? updateWeek;
   Key appStatsKey = Key(DateTime.now().toString());
+  Key daysKey = const Key("0");
+  int offsetDays = 0;
 
   @override
   void initState() {
@@ -26,6 +30,15 @@ class _ChartsContainer extends State<ChartsContainer> {
         appStatsKey = Key(dayDate.toString());
       });
     };
+
+    updateWeek = (int offset) {
+      setState(() {
+        offsetDays = offset;
+        daysKey = Key(offset.toString());
+      });
+      updateDay!(DateTime.now().add(Duration(days: -offset)));
+    };
+
     super.initState();
   }
 
@@ -37,7 +50,10 @@ class _ChartsContainer extends State<ChartsContainer> {
         Expanded(
             flex: 1,
             child: DaysChart(
+              key: daysKey,
+              offsetDays: offsetDays,
               updateDayCallback: updateDay!,
+              updateWeekCallback: updateWeek!,
             )),
         Expanded(
             flex: 5,
@@ -67,8 +83,8 @@ class _ChartsContainer extends State<ChartsContainer> {
                       },
                       icon: Icon(
                         Icons.circle,
-                        color: UIManager
-                            .applicationLightTheme.colorScheme.primary,
+                        color:
+                            UIManager.applicationLightTheme.colorScheme.primary,
                       )),
                   IconButton(
                       onPressed: () {
@@ -80,8 +96,8 @@ class _ChartsContainer extends State<ChartsContainer> {
                       },
                       icon: Icon(
                         Icons.circle,
-                        color: UIManager
-                            .applicationDarkTheme.colorScheme.primary,
+                        color:
+                            UIManager.applicationDarkTheme.colorScheme.primary,
                       )),
                   Expanded(
                       child: ApplicationsStatsChart(

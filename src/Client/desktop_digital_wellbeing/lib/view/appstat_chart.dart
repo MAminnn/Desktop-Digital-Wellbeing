@@ -72,9 +72,9 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
             labelPosition: ChartDataLabelPosition.inside,
             isVisible: true,
             textStyle: TextStyle(
-              fontFamily: UIManager.font,
-                color: UIManager
-                    .applicationCurrentTheme.colorScheme.onPrimary)),
+                fontFamily: UIManager.font,
+                color:
+                    UIManager.applicationCurrentTheme.colorScheme.onPrimary)),
         dataSource: appStats,
         innerRadius: '70%',
         explode: false,
@@ -181,10 +181,6 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
                 widget: DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: RadialGradient(colors: [
-                      // Color.fromARGB(200, 70, 193, 157),
-                      // Color.fromARGB(110, 70, 193, 157),
-                      // Color.fromARGB(40, 70, 193, 157),
-
                       UIManager.applicationCurrentTheme.colorScheme.primary
                           .withAlpha(215),
                       UIManager.applicationCurrentTheme.colorScheme.primary
@@ -192,8 +188,8 @@ class _ApplicationStatsChartState extends State<ApplicationsStatsChart> {
                       UIManager.applicationCurrentTheme.colorScheme.primary
                           .withAlpha(95),
                     ], radius: 0.5),
-                    color: UIManager
-                        .applicationCurrentTheme.colorScheme.primary,
+                    color:
+                        UIManager.applicationCurrentTheme.colorScheme.primary,
                     shape: BoxShape.circle,
                   ),
                 )),

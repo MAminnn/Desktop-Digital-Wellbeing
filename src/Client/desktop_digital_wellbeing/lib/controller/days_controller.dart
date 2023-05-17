@@ -1,7 +1,7 @@
 import 'package:desktop_digital_wellbeing/model/entities/application_stat.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
-
+import 'package:flutter/cupertino.dart';
 import '../model/database_context/database_context.dart';
 import '../model/entities/day.dart';
 
@@ -26,7 +26,7 @@ class DaysController {
       while (daysQuery[i]['DateTime'] == day['DateTime']) {
         days
             .firstWhere((element) =>
-                element.dayDate == DateTime.parse(day['DateTime'].toString()))
+        element.dayDate == DateTime.parse(day['DateTime'].toString()))
             .applicationStats
             .add(ApplicationStat.fromQueryIncludeDay(day));
         i++;
@@ -52,8 +52,8 @@ class DaysController {
       while (daysQuery[i]['DateTime'] == day['DateTime']) {
         days
             .firstWhere((element) =>
-                element.dayDate ==
-                DateTime.parse(daysQuery[i]['DateTime'].toString()))
+        element.dayDate ==
+            DateTime.parse(daysQuery[i]['DateTime'].toString()))
             .applicationStats
             .add(ApplicationStat.fromQueryIncludeDay(daysQuery[i]));
         i++;
@@ -69,12 +69,13 @@ class DaysController {
   Future<Day> getDayOrDefault({required DateTime dayDate}) async {
     String query = "SELECT * FROM Days day "
         "INNER JOIN ApplicationStats applicationStat ON "
-        "day.DateTime==applicationStat.DayDate WHERE day.DateTime='${DateFormat("yyyy-MM-dd 00:00:00").format(dayDate)}'";
+        "day.DateTime==applicationStat.DayDate WHERE day.DateTime='${DateFormat(
+        "yyyy-MM-dd 00:00:00").format(dayDate)}'";
     var dayQuery = await _dbContext.rawQuery(query);
     if (dayQuery.isEmpty) {
       return Day(
           dayDate:
-              DateTime.parse(DateFormat("yyyy-MM-dd 00:00:00").format(dayDate)),
+          DateTime.parse(DateFormat("yyyy-MM-dd 00:00:00").format(dayDate)),
           applicationStats: []);
     }
     Day day = Day(
@@ -85,5 +86,14 @@ class DaysController {
           .add(ApplicationStat.fromQueryIncludeDay(dayQuery[i]));
     }
     return day;
+  }
+
+  Future<Day> getFirstDay() async {
+    String query =
+        "SELECT DateTime FROM Days day ORDER BY day.DateTime";
+    var res = await _dbContext.rawQuery(query);
+    debugPrint(res[0].toString());
+    return Day(applicationStats: [],
+        dayDate: DateTime.parse(res[0]['DateTime'].toString()));
   }
 }
