@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:desktop_digital_wellbeing/controller/applications_controller.dart';
 import 'package:desktop_digital_wellbeing/view/sidebar.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import '../model/view_models/appusage_lastweek_vm.dart';
+import '../utilities/util.dart';
 import 'theme_manager.dart';
 
 class AppUsageChart extends StatefulWidget {
@@ -17,6 +20,7 @@ class AppUsageChart extends StatefulWidget {
 class _AppUsageChart extends State<AppUsageChart> {
   List<AppUsageStatViewModel> appUsageStats = [];
   AppUsageStatViewModel? selectedApp;
+  Widget selectedAppIcon = Center();
 
   void _load() async {
     appUsageStats = [];
@@ -32,10 +36,17 @@ class _AppUsageChart extends State<AppUsageChart> {
     }
     appUsageStats.sort((a, b) => b.usageSum.compareTo(a.usageSum));
     selectedApp = appUsageStats[0];
+    selectedAppIcon = Center(
+      child: Image.file(File(selectedApp!.getIconPath()),width: 200),
+    );
     setState(() {});
   }
 
-  void _updateChart() {}
+  void _updateChart() {
+    selectedAppIcon = Center(
+      child: Image.file(File(selectedApp!.getIconPath()), width: 200),
+    );
+  }
 
   @override
   void initState() {
@@ -55,6 +66,7 @@ class _AppUsageChart extends State<AppUsageChart> {
             Expanded(
                 child: Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SfCartesianChart(
@@ -225,7 +237,8 @@ class _AppUsageChart extends State<AppUsageChart> {
                         _updateChart();
                       });
                     },
-                  )
+                  ),
+                  selectedAppIcon
                 ],
               ),
             ))
