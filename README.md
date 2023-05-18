@@ -7,3 +7,5 @@ Useful software to record every second of your PC usage
 * Light/Dark mode
 ## Big Thanks
 * [JohnTasler](https://github.com/JohnTasler/ExtractAssociatedIcon)
+## Installation
+* Download and install the `setup.exe` on [Windows Pre-release](https://github.com/MAminnn/Desktop-Digital-Wellbeing/releases/tag/windows)
